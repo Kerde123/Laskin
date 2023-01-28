@@ -11,23 +11,29 @@ Kun '-' painiketta painetaan lasketaan syötettyjen numeroiden erotus ja tulos n
 
 export default function App() {
 
-  const [number1, setNumber1] = useState('')
-  const [number2, setNumber2] = useState('')
-
-  const summa = parseInt(number1) + parseInt(number2)
-  const erotus = parseInt(number1) - parseInt(number2)
-
-  const pressed1 = () => { 
-    Alert.alert("Result: " + summa)
+  const [number1, setNumber1] = useState('');
+  const [number2, setNumber2] = useState('');
+  const [result, setResult] = useState('');
+  
+    const pressed1 = () => { 
+    setResult(parseInt(number1)+parseInt(number2));
+    setNumber1('');
+    setNumber2('');
   };
   
   const pressed2 = () => {
-    Alert.alert("Result: " + erotus)
+    setResult(parseInt(number1)-parseInt(number2));
+    setNumber1('');
+    setNumber2('');
   };
+  
+
 
   return (
     <View>
     <View style={styles.container}>
+
+      <Text>Result: {result} </Text>
       <TextInput
         style={{ width: 200, borderColor: 'black', borderWidth: 2}}
         keyboardType='numeric'
