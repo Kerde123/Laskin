@@ -1,34 +1,43 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert, FlatList } from 'react-native';
 import React, { useState } from 'react';
 
 /*Tee yksinkertainen laskinsovellus React Native:lla.
 Sovelluksen toiminta:
 Kaksi TextInput komponenttia, johon voi syöttää numeroita. Käytä niissä numeronäppäimistöä estämään tekstin syöttö.
 Kun '+' painiketta painetaan lasketaan syötettyjen numeroiden summa ja tulos näytetään sovelluksessa. 
-Kun '-' painiketta painetaan lasketaan syötettyjen numeroiden erotus ja tulos näytetään sovelluksessa.*/
+Kun '-' painiketta painetaan lasketaan syötettyjen numeroiden erotus ja tulos näytetään sovelluksessa.
 
+
+Jatka laskin tehtävää (Tehtävä 1).
+
+Lisää sovellukseen FlatList komponentti, jossa näytetään kaikki sovelluksella tehdyt laskutoimitukset. 
+Huom! Tietoa ei vielä tallenneta pysyvästi vaan historia nollautuu aina kun sovellus käynnistetään uudelleen.
+*/
 
 export default function App() {
 
   const [number1, setNumber1] = useState('');
   const [number2, setNumber2] = useState('');
   const [result, setResult] = useState('');
+  const [data, setData] = useState([]);
   
     const pressed1 = () => { 
     setResult(parseInt(number1)+parseInt(number2));
     setNumber1('');
     setNumber2('');
+
+    setData([...data, { key: number1 + "+" + number2 + "=" + result }]);
   };
   
   const pressed2 = () => {
     setResult(parseInt(number1)-parseInt(number2));
     setNumber1('');
     setNumber2('');
+
+    setData([...data, { key: number1 + "-" + number2 + "=" + result }]);
   };
   
-
-
   return (
     <View>
     <View style={styles.container}>
@@ -59,6 +68,16 @@ export default function App() {
         onPress = {pressed2}
      />
     </View>
+
+    <Text style={styles.fixToText}>History</Text>
+
+    <FlatList style={styles.list}
+        data={data}
+        renderItem={({ item }) =>
+          <Text>{item.key}</Text>
+        }
+      />
+
     </View>
 
   );
@@ -78,4 +97,9 @@ const styles = StyleSheet.create({
     marginLeft: 100,
     marginRight: 100,
   },
+
+  list: {
+    marginLeft: 100,
+    marginRight: 100,
+  }
 });
