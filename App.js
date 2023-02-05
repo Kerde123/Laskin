@@ -21,23 +21,29 @@ export default function App() {
   const [number2, setNumber2] = useState('');
   const [result, setResult] = useState('');
   const [data, setData] = useState([]);
+
+  const plusResult = parseInt(number1)+parseInt(number2);
+  const minusResult = parseInt(number1)-parseInt(number2);
   
-    const pressed1 = () => { 
-    setResult(parseInt(number1)+parseInt(number2));
+  const pressed1 = () => { 
+    setResult(plusResult);
     setNumber1('');
     setNumber2('');
 
-    setData([...data, { key: number1 + "+" + number2 + "=" + result }]);
+    const text = number1 + "+" + number2 + "=" + plusResult;
+    setData([...data, { key: text }]);
   };
   
   const pressed2 = () => {
-    setResult(parseInt(number1)-parseInt(number2));
+    setResult(minusResult);
     setNumber1('');
     setNumber2('');
 
-    setData([...data, { key: number1 + "-" + number2 + "=" + result }]);
+    const text = number1 + "-" + number2 + "=" + minusResult;
+    setData([...data, { key: text }]);
   };
-  
+
+
   return (
     <View>
     <View style={styles.container}>
@@ -73,9 +79,10 @@ export default function App() {
 
     <FlatList style={styles.list}
         data={data}
+        keyExtractor= { (item, index) => index }
         renderItem={({ item }) =>
           <Text>{item.key}</Text>
-        }
+      }
       />
 
     </View>
